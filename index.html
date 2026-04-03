@@ -150,32 +150,29 @@ img{display:block;max-width:100%}
 }
 @keyframes hintBlink{0%,100%{opacity:0.3}50%{opacity:0.9}}
 
-/* ══ STICKY COUNTDOWN BAR ═══════════════════════════════════ */
+/* ══ STICKY DATE STRIP ══════════════════════════════════════ */
 #cd-sticky{
   position:fixed;top:0;left:0;right:0;z-index:5990;
-  background:rgba(42,47,22,0.96);
+  background:rgba(42,47,22,0.94);
   backdrop-filter:blur(14px);
-  padding:0.5rem 2rem;
-  display:flex;align-items:center;justify-content:center;gap:2.5rem;
+  padding:0.45rem 2rem;
+  display:flex;align-items:center;justify-content:center;gap:1.2rem;
   transform:translateY(-100%);
   transition:transform 0.6s cubic-bezier(.22,1,.36,1);
-  border-bottom:1px solid rgba(132,138,54,0.25);
+  border-bottom:1px solid rgba(132,138,54,0.2);
+  height:38px;
 }
 #cd-sticky.show{transform:translateY(0)}
-.cd-sticky-label{
-  font-family:var(--serif);font-style:italic;
-  font-size:0.95rem;color:rgba(231,237,235,0.5);
+.cd-strip-names{
+  font-family:var(--script);font-size:1.15rem;
+  color:rgba(231,237,235,0.7);
 }
-.cd-sticky-nums{display:flex;gap:1.5rem;align-items:center}
-.cd-sticky-item{
-  font-family:var(--sans);font-size:0.75rem;
-  color:rgba(231,237,235,0.8);letter-spacing:0.08em;
+.cd-strip-sep{color:rgba(132,138,54,0.4);font-size:0.7rem}
+.cd-strip-date{
+  font-family:var(--sans);font-size:0.68rem;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(231,237,235,0.5);
 }
-.cd-sticky-item strong{
-  font-family:var(--serif);font-size:1.4rem;font-weight:300;
-  color:var(--off);display:inline-block;min-width:2ch;text-align:right;
-}
-.cd-sticky-sep{color:rgba(132,138,54,0.4);font-size:0.8rem}
 
 /* ══ PROGRESS BAR ════════════════════════════════════════════ */
 #progress{
@@ -634,6 +631,61 @@ footer::before{
 }
 .footer-copy{font-family:var(--sans);font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(244,240,232,0.22);position:relative}
 
+/* ══ MAP IMAGE LINK ══════════════════════════════════════════ */
+.ev-map-img{
+  display:block;position:relative;border-radius:12px;overflow:hidden;
+  text-decoration:none;
+  box-shadow:0 10px 40px rgba(58,63,32,0.18);
+  transition:transform 0.5s cubic-bezier(.22,1,.36,1),box-shadow 0.5s;
+  max-width:340px;
+}
+.ev-map-img:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 60px rgba(58,63,32,0.25)}
+.ev-map-img img{width:100%;display:block;transition:transform 0.7s cubic-bezier(.22,1,.36,1)}
+.ev-map-img:hover img{transform:scale(1.04)}
+.ev-map-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(58,63,32,0.75) 0%,transparent 55%);
+  display:flex;align-items:flex-end;padding:1.2rem 1.4rem;
+}
+.ev-map-img-label{
+  font-family:var(--sans);font-size:0.72rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:rgba(231,237,235,0.9);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.ev-map-pin{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(255,255,255,0.15);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;font-size:0.85rem;
+  border:1px solid rgba(255,255,255,0.25);
+  transition:background 0.3s;
+}
+.ev-map-img:hover .ev-map-pin{background:rgba(255,255,255,0.3)}
+
+/* ══ REFERENCIAS BUTTON ══════════════════════════════════════ */
+.ref-btn{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  padding:0.85rem 2.4rem;
+  border:1.5px solid var(--sage);border-radius:100px;
+  font-family:var(--sans);font-size:0.82rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--sage);text-decoration:none;
+  transition:background 0.3s,color 0.3s,transform 0.25s;
+  margin-top:2.5rem;
+}
+.ref-btn:hover{background:var(--sage);color:var(--white);transform:scale(1.04)}
+
+/* ══ PET ACCENTS ═════════════════════════════════════════════ */
+/* Small pets peeking from corners across sections */
+.pet-accent{
+  position:absolute;pointer-events:none;
+  mix-blend-mode:multiply;
+  opacity:0;transition:opacity 1.2s ease;
+  animation:floatY 5s ease-in-out infinite;
+}
+.pet-accent.visible{opacity:0.82}
+.pet-accent-br{bottom:0;right:2rem;width:clamp(80px,10vw,130px)}
+.pet-accent-bl{bottom:0;left:2rem;width:clamp(80px,10vw,130px)}
+.pet-accent-tr{top:5rem;right:1.5rem;width:clamp(60px,8vw,110px)}
+
 /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
 @media(max-width:768px){
   .ev-panel{grid-template-columns:1fr;gap:2rem}
@@ -683,18 +735,13 @@ footer::before{
   <p class="env-hint">✦ &nbsp; toca para abrir tu invitación &nbsp; ✦</p>
 </div>
 
-<!-- STICKY COUNTDOWN -->
+<!-- STICKY DATE STRIP -->
 <div id="cd-sticky">
-  <span class="cd-sticky-label">29 · ago · 2026</span>
-  <div class="cd-sticky-nums">
-    <span class="cd-sticky-item"><strong id="cs-d">--</strong> días</span>
-    <span class="cd-sticky-sep">·</span>
-    <span class="cd-sticky-item"><strong id="cs-h">--</strong> h</span>
-    <span class="cd-sticky-sep">·</span>
-    <span class="cd-sticky-item"><strong id="cs-m">--</strong> min</span>
-    <span class="cd-sticky-sep">·</span>
-    <span class="cd-sticky-item"><strong id="cs-s">--</strong> seg</span>
-  </div>
+  <span class="cd-strip-names">Jimena &amp; Abdón</span>
+  <span class="cd-strip-sep">✦</span>
+  <span class="cd-strip-date">29 · agosto · 2026</span>
+  <span class="cd-strip-sep">✦</span>
+  <span class="cd-strip-date">5:00 p.m.</span>
 </div>
 
 <!-- PROGRESS -->
@@ -725,8 +772,6 @@ footer::before{
       <span class="hero-amp">&amp;</span>
       Abdón
     </h1>
-    <div class="hero-rule"></div>
-    <p class="hero-tagline">Con la bendición de Dios y de nuestros padres,<br>damos inicio a nuestro para siempre.</p>
     <div class="hero-badge">✦ &nbsp; 29 de agosto · 2026 &nbsp; ✦</div>
   </div>
   <div class="scroll-cue">
@@ -744,6 +789,8 @@ footer::before{
 <!-- ━━━━ BLESSING ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section id="blessing">
   <div class="paper-overlay"></div>
+  <!-- 🐱 cats peeking bottom-right of blessing -->
+  <img class="pet-accent pet-accent-br rv" src="assets/cats.jpg" alt="" aria-hidden="true"/>
   <div class="container">
     <div class="div rv"><span class="div-ico">✦</span></div>
     <blockquote class="blessing-quote rv d1">
@@ -793,12 +840,12 @@ footer::before{
 <!-- ━━━━ COUNTDOWN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section id="countdown">
   <div class="container" style="position:relative;z-index:1">
-    <span class="tag rv">La cuenta regresiva</span>
-    <h2 class="h2 rv d1">Faltan…</h2>
-
-    <div class="cd-cal rv-s d2">
+    <div class="cd-cal rv-s">
       <img src="assets/calendar.jpg" alt="Ago 29 2026" style="width:100%;display:block"/>
     </div>
+
+    <span class="tag rv d1">La cuenta regresiva</span>
+    <h2 class="h2 rv d2">Faltan…</h2>
 
     <div class="cd-row rv d3">
       <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-lbl">Días</span></div>
@@ -828,7 +875,6 @@ footer::before{
   <!-- Ceremony -->
   <div class="ev-panel">
     <div class="ev-illus-col rv-l">
-      <!-- Church PNG: transparent bg, drops shadow only -->
       <img class="ev-illus" src="assets/church.png" alt="Iglesia María Auxiliadora"/>
     </div>
     <div class="ev-text-col rv-r d1">
@@ -841,26 +887,23 @@ footer::before{
         <div class="ev-time-right"><span class="ev-time-ampm">p.m.</span></div>
       </div>
       <div class="ev-rule"></div>
-      <p class="ev-loc">📍 Piura, Perú</p>
-      <a class="ev-map" href="https://www.google.com/maps/place/Iglesia+Mar%C3%ADa+Auxiliadora/@-5.1912591,-80.6266165,17.79z/data=!4m6!3m5!1s0x904a107b88b96825:0x9cc3bc7936464356!8m2!3d-5.1930913!4d-80.6252921!16s%2Fg%2F1hdzwh0r5?entry=ttu" target="_blank" rel="noopener">
-        🗺 &nbsp;Ver en Google Maps
+      <!-- Image IS the map link -->
+      <a class="ev-map-img rv-r d2" href="https://www.google.com/maps/place/Iglesia+Mar%C3%ADa+Auxiliadora/@-5.1912591,-80.6266165,17.79z/data=!4m6!3m5!1s0x904a107b88b96825:0x9cc3bc7936464356!8m2!3d-5.1930913!4d-80.6252921!16s%2Fg%2F1hdzwh0r5?entry=ttu" target="_blank" rel="noopener">
+        <img src="https://jimenayabdon.my.canva.site/_assets/media/1654b82d2bcadfbecf37123af97528b3.jpg" alt="Ver Iglesia en Google Maps"/>
+        <div class="ev-map-img-overlay">
+          <span class="ev-map-img-label"><span class="ev-map-pin">📍</span> Ver en Google Maps</span>
+        </div>
       </a>
     </div>
-  </div>
-
-  <!-- Lights separator -->
-  <div class="ev-divider-full">
-    <img src="assets/lights.jpg" alt="" aria-hidden="true"/>
   </div>
 
   <!-- Reception -->
   <div class="ev-panel reverse reception-bg">
     <div class="ev-illus-col rv-r">
-      <!-- Garden JPG: multiply blend removes white bg -->
       <img class="ev-illus blend" src="assets/garden.jpg" alt="El Remanso"/>
     </div>
     <div class="ev-text-col rv-l d1">
-      <span class="ev-eyebrow">Recepción & celebración</span>
+      <span class="ev-eyebrow">Recepción &amp; celebración</span>
       <h3 class="ev-place">El Remanso</h3>
       <div class="ev-time-block">
         <span class="ev-time-num">7</span>
@@ -869,9 +912,12 @@ footer::before{
         <div class="ev-time-right"><span class="ev-time-ampm">p.m.</span></div>
       </div>
       <div class="ev-rule"></div>
-      <p class="ev-loc">📍 Piura, Perú</p>
-      <a class="ev-map" href="https://www.google.com/maps/place/EL+REMANSO/@-5.1422108,-80.6236131,17z/data=!3m1!4b1!4m6!3m5!1s0x904a0fc94942318f:0x95f9e60695f4c5c3!8m2!3d-5.1422108!4d-80.6236131!16s%2Fg%2F11gmg34zcw?entry=ttu" target="_blank" rel="noopener">
-        🗺 &nbsp;Ver en Google Maps
+      <!-- Image IS the map link -->
+      <a class="ev-map-img rv-l d2" href="https://www.google.com/maps/place/EL+REMANSO/@-5.1422108,-80.6236131,17z/data=!3m1!4b1!4m6!3m5!1s0x904a0fc94942318f:0x95f9e60695f4c5c3!8m2!3d-5.1422108!4d-80.6236131!16s%2Fg%2F11gmg34zcw?entry=ttu" target="_blank" rel="noopener">
+        <img src="https://jimenayabdon.my.canva.site/_assets/media/76cfaec1764d61eda08eea0c9e2972a6.jpg" alt="Ver El Remanso en Google Maps"/>
+        <div class="ev-map-img-overlay">
+          <span class="ev-map-img-label"><span class="ev-map-pin">📍</span> Ver en Google Maps</span>
+        </div>
       </a>
     </div>
   </div>
@@ -886,6 +932,8 @@ footer::before{
 <!-- ━━━━ DRESS CODE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <section id="dresscode">
   <div class="paper-overlay"></div>
+  <!-- 🐶 dog peeking bottom-left of dresscode -->
+  <img class="pet-accent pet-accent-bl rv" src="assets/dog.jpg" alt="" aria-hidden="true"/>
 
   <!-- dancers full-width, blended -->
   <img class="dress-dancers rv-s" src="assets/dancing.png" alt="Garden Chic"/>
@@ -909,18 +957,11 @@ footer::before{
         </div>
       </div>
 
-      <div class="palette-wrap rv d3">
-        <p class="palette-label">Paleta de colores sugerida</p>
-        <div class="palette">
-          <div class="swatch" style="background:#5c6346" title="Verde salvia"></div>
-          <div class="swatch" style="background:#848a36" title="Oliva"></div>
-          <div class="swatch" style="background:#977f68" title="Taupe"></div>
-          <div class="swatch" style="background:#c9b99a" title="Beis dorado"></div>
-          <div class="swatch" style="background:#d4c5a0" title="Arena"></div>
-          <div class="swatch" style="background:#b07d62" title="Terracota"></div>
-          <div class="swatch" style="background:#e7edeb" title="Blanco roto"></div>
-        </div>
-        <p class="avoid rv d4">Por favor evitar: <strong>Blanco</strong> y <strong>Negro</strong></p>
+      <div class="palette-wrap rv d3" style="text-align:center">
+        <p class="avoid">Por favor evitar: <strong>Blanco</strong> y <strong>Negro</strong></p>
+        <a class="ref-btn rv d4" href="https://dparte.wedding/jimenayabdon" target="_blank" rel="noopener">
+          ✦ &nbsp; Referencias
+        </a>
       </div>
     </div>
   </div>
@@ -963,9 +1004,8 @@ footer::before{
 <section id="regalos">
   <div class="paper-overlay"></div>
   <div class="container">
-    <span class="tag rv">Con cariño</span>
-    <h2 class="h2 rv d1">Mesa de regalos</h2>
-    <p class="sub rv d2">Tu presencia es nuestro mayor tesoro. Si deseas obsequiarnos algo, aquí algunas opciones.</p>
+    <div class="div rv"><span class="div-ico">✦</span></div>
+    <p class="sub rv d1" style="margin-bottom:1rem">Si deseas obsequiarnos algo,<br>aquí algunas opciones con todo nuestro amor.</p>
     <div class="div rv d3"><span class="div-ico">✦</span></div>
 
     <div class="gift-list">
@@ -989,11 +1029,6 @@ footer::before{
       </div>
     </div>
 
-    <!-- pets as floating decorative elements -->
-    <div class="pets-corner">
-      <img class="pet-img rv-l" src="assets/cats.jpg" alt="Nuestros gatos" style="max-height:170px;mix-blend-mode:multiply"/>
-      <img class="pet-img rv-r d2" src="assets/dog.jpg" alt="Nuestro perro" style="max-height:190px;mix-blend-mode:multiply"/>
-    </div>
   </div>
 
   <div class="wave-bottom">
@@ -1007,10 +1042,6 @@ footer::before{
 <footer>
   <div class="div" style="filter:brightness(0.4);margin-bottom:2.5rem"><span class="div-ico" style="color:var(--off)">✦</span></div>
   <p class="footer-names">Jimena &amp; Abdón</p>
-  <p class="footer-blessing">
-    Con la bendición de Dios y de nuestros padres,<br>
-    damos inicio a nuestro para siempre.
-  </p>
   <p class="footer-copy">¡Los esperamos con mucho amor! · 29 · VIII · 2026</p>
 </footer>
 
@@ -1040,9 +1071,43 @@ for(let i=0;i<36;i++){
   epContainer.appendChild(p);
 }
 
+/* ─ ENVELOPE SOUND (Web Audio paper rustle) ─────────── */
+function playEnvelopeSound(){
+  try{
+    const ac=new(window.AudioContext||window.webkitAudioContext)();
+    // Layer 1: white noise burst (paper rustle)
+    const bufLen=ac.sampleRate*0.55;
+    const buf=ac.createBuffer(1,bufLen,ac.sampleRate);
+    const data=buf.getChannelData(0);
+    for(let i=0;i<bufLen;i++) data[i]=(Math.random()*2-1)*(1-i/bufLen)*0.55;
+    const src=ac.createBufferSource();
+    src.buffer=buf;
+    // bandpass to make it sound like paper
+    const bp=ac.createBiquadFilter();
+    bp.type='bandpass';bp.frequency.value=1800;bp.Q.value=0.4;
+    // gain envelope
+    const gain=ac.createGain();
+    gain.gain.setValueAtTime(0,ac.currentTime);
+    gain.gain.linearRampToValueAtTime(0.7,ac.currentTime+0.04);
+    gain.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.55);
+    src.connect(bp);bp.connect(gain);gain.connect(ac.destination);
+    src.start();
+    // Layer 2: soft low thud
+    const osc=ac.createOscillator();
+    const g2=ac.createGain();
+    osc.type='sine';osc.frequency.setValueAtTime(120,ac.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(60,ac.currentTime+0.18);
+    g2.gain.setValueAtTime(0.35,ac.currentTime);
+    g2.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.22);
+    osc.connect(g2);g2.connect(ac.destination);
+    osc.start();osc.stop(ac.currentTime+0.22);
+  }catch(e){}
+}
+
 /* ─ OPEN ENVELOPE ────────────────────────────────────── */
 document.body.style.overflow='hidden';
 function openEnvelope(){
+  playEnvelopeSound();
   const env=document.getElementById('envelope');
   const scr=document.getElementById('env-screen');
   env.classList.add('opening');
@@ -1089,7 +1154,7 @@ function pad(n){return String(n).padStart(2,'0')}
 function tick(){
   const diff=WEDDING-Date.now();
   if(diff<=0){
-    ['cd-d','cd-h','cd-m','cd-s','cs-d','cs-h','cs-m','cs-s']
+    ['cd-d','cd-h','cd-m','cd-s']
       .forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='00'});
     return;
   }
@@ -1097,16 +1162,10 @@ function tick(){
   const h=Math.floor(diff%864e5/36e5);
   const m=Math.floor(diff%36e5/6e4);
   const s=Math.floor(diff%6e4/1e3);
-  // main
   document.getElementById('cd-d').textContent=pad(d);
   document.getElementById('cd-h').textContent=pad(h);
   document.getElementById('cd-m').textContent=pad(m);
   document.getElementById('cd-s').textContent=pad(s);
-  // sticky
-  document.getElementById('cs-d').textContent=pad(d);
-  document.getElementById('cs-h').textContent=pad(h);
-  document.getElementById('cs-m').textContent=pad(m);
-  document.getElementById('cs-s').textContent=pad(s);
 }
 tick(); setInterval(tick,1000);
 
