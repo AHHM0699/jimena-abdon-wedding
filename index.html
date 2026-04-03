@@ -125,10 +125,15 @@ img{display:block;max-width:100%}
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;
   z-index:2;border:1px solid rgba(151,127,104,0.2);
   transform:translateY(0);
-  transition:transform 0.9s cubic-bezier(.22,1,.36,1);
-  transition-delay:0.55s;
+  transition:transform 1s cubic-bezier(.22,1,.36,1), z-index 0s 0.5s;
 }
-.env-wrapper.opening .env-card{transform:translateY(-80px)}
+/* Card rises above the entire envelope when opened */
+.env-wrapper.opening .env-card{
+  transform:translateY(-160px);
+  z-index:20;
+  transition:transform 1s 0.5s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 20px 60px rgba(0,0,0,0.35);
+}
 .env-mono{width:64px;height:64px;background:url('assets/monogram-ja.jpg') center/cover;border-radius:50%;margin-bottom:0.3rem}
 .env-names{font-family:var(--script);font-size:1.7rem;color:var(--dark)}
 .env-date{font-family:var(--sans);font-size:0.62rem;letter-spacing:0.25em;color:var(--taupe);text-transform:uppercase}
@@ -759,26 +764,15 @@ footer::before{
   <div class="paper-overlay"></div>
   <div class="container">
     <span class="tag rv">Nuestra historia</span>
-    <h2 class="h2 rv d1">Seis años juntos</h2>
+    <h2 class="h2 rv d1">6 años juntos</h2>
     <div class="div rv d2"><span class="div-ico">✦</span></div>
 
+    <!-- Editorial: pedida (B&W, tall) + foto Torre Eiffel (color) -->
     <div class="photo-grid">
-      <div class="pg-item span-r rv-l" style="height:520px">
-        <img src="https://jimenayabdon.my.canva.site/_assets/media/89e7c252531c47032da4ea7f0cbab6a0.jpg" alt="Jimena" style="height:100%"/>
+      <div class="pg-item span-r rv-l" style="height:560px">
+        <img src="assets/pedida.jpg" alt="La pedida" style="height:100%;object-position:center top"/>
       </div>
-      <div class="pg-item rv-r" style="height:255px">
-        <img src="https://jimenayabdon.my.canva.site/_assets/media/cdd6fad33536f62065d81115736abafd.jpg" alt="Abdón" style="height:100%"/>
-      </div>
-      <div class="pg-item rv-r d2" style="height:255px">
-        <img src="https://jimenayabdon.my.canva.site/_assets/media/50a28592daa7ffd443872f5e5d597be9.png" alt="Juntos" style="height:100%"/>
-      </div>
-    </div>
-
-    <div class="photo-grid-2" style="margin-top:1rem">
-      <div class="pg-item rv-l" style="height:280px">
-        <img src="https://jimenayabdon.my.canva.site/_assets/media/cfc8333a4c3934596c253d80cd902ecf.png" alt="Jimena y Abdón" style="height:100%"/>
-      </div>
-      <div class="pg-item rv-r d1" style="height:280px">
+      <div class="pg-item rv-r" style="height:560px">
         <img src="https://jimenayabdon.my.canva.site/_assets/media/b0ca2483862604c7e187061edfa5c423.png" alt="Jimena y Abdón" style="height:100%"/>
       </div>
     </div>
