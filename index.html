@@ -1050,15 +1050,15 @@ footer::before{
 
       <div class="palette-wrap rv d3" style="text-align:center">
         <p class="avoid">Por favor evitar: <strong>Blanco</strong> y <strong>Negro</strong></p>
-        <a class="ref-btn rv d4" href="https://dparte.wedding/jimenayabdon" target="_blank" rel="noopener">
-          ✦ &nbsp; Referencias
-        </a>
       </div>
     </div>
   </div>
 
-  <!-- dancers full-width, blended -->
-  <img class="dress-dancers rv-s" src="assets/DRESSCODE.PNG" alt="Garden Chic"/>
+  <!-- dancers full-width, blended — botón a referencias -->
+  <a id="dresscode-link" href="https://dparte.wedding/jimenayabdon" target="_blank" rel="noopener" style="display:block;position:relative;">
+    <img class="dress-dancers rv-s" src="assets/DRESSCODE.PNG" alt="Garden Chic"/>
+    <span class="map-hint" id="dresscode-hint">Toca para ver más referencias</span>
+  </a>
 
   <div class="wave-bottom">
     <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -1392,6 +1392,18 @@ frame();
 (function(){
   const link=document.getElementById('iglesia-link');
   const hint=document.getElementById('iglesia-hint');
+  if(!link||!hint) return;
+  let timer=null;
+  function showHint(){
+    hint.classList.add('show');
+    clearTimeout(timer);
+    timer=setTimeout(()=>hint.classList.remove('show'),2800);
+  }
+  link.addEventListener('touchstart',showHint,{passive:true});
+})();
+(function(){
+  const link=document.getElementById('dresscode-link');
+  const hint=document.getElementById('dresscode-hint');
   if(!link||!hint) return;
   let timer=null;
   function showHint(){
