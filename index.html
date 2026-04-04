@@ -37,7 +37,7 @@ img{display:block;max-width:100%}
 #loader.hide{opacity:0;visibility:hidden}
 .loader-mono{
   width:120px;height:120px;
-  background:url('assets/monogram-ja.jpg') center/cover;
+  background:url('assets/SELLO.jpg') center/cover;
   border-radius:50%;opacity:0;
   animation:loaderIn 1s 0.2s forwards;
   mix-blend-mode:normal;
@@ -64,7 +64,7 @@ img{display:block;max-width:100%}
 /* paper texture overlay on envelope screen */
 #env-screen::before{
   content:'';position:absolute;inset:0;
-  background:url('assets/texture.jpg') center/cover;
+  background:url('assets/TEXTURA.jpg') center/cover;
   opacity:0.04;pointer-events:none;mix-blend-mode:overlay;
 }
 
@@ -134,7 +134,7 @@ img{display:block;max-width:100%}
   transition:transform 1s 0.5s cubic-bezier(.22,1,.36,1);
   box-shadow:0 20px 60px rgba(0,0,0,0.35);
 }
-.env-mono{width:64px;height:64px;background:url('assets/monogram-ja.jpg') center/cover;border-radius:50%;margin-bottom:0.3rem}
+.env-mono{width:64px;height:64px;background:url('assets/SELLO.jpg') center/cover;border-radius:50%;margin-bottom:0.3rem}
 .env-names{font-family:var(--script);font-size:1.7rem;color:var(--dark)}
 .env-date{font-family:var(--sans);font-size:0.62rem;letter-spacing:0.25em;color:var(--taupe);text-transform:uppercase}
 
@@ -227,7 +227,7 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
 /* paper texture overlay on all sections */
 .paper-overlay{
   position:absolute;inset:0;pointer-events:none;
-  background:url('assets/texture.jpg') center/cover;
+  background:url('assets/TEXTURA.jpg') center/cover;
   opacity:0.06;mix-blend-mode:multiply;
 }
 
@@ -267,7 +267,7 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
 .hero-lights{
   position:absolute;top:0;left:0;right:0;
   height:220px;
-  background:url('assets/lights.jpg') center top/auto 100% no-repeat;
+  background:url('assets/FOCOS.jpg') center top/auto 100% no-repeat;
   mix-blend-mode:multiply;
   pointer-events:none;z-index:2;opacity:0.9;
 }
@@ -369,7 +369,7 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
 }
 #countdown::before{
   content:'';position:absolute;inset:0;
-  background:url('assets/texture.jpg') center/cover;
+  background:url('assets/TEXTURA.jpg') center/cover;
   opacity:0.04;mix-blend-mode:overlay;pointer-events:none;
 }
 #countdown .tag{color:rgba(231,237,235,0.55)}
@@ -519,13 +519,13 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
 }
 #rsvp::before{
   content:'';position:absolute;inset:0;
-  background:url('assets/texture.jpg') center/cover;
+  background:url('assets/TEXTURA.jpg') center/cover;
   opacity:0.05;mix-blend-mode:overlay;
 }
 /* string lights decoration at top of rsvp */
 .rsvp-lights{
   position:absolute;top:0;left:0;right:0;height:200px;
-  background:url('assets/lights.jpg') center top/auto 100% no-repeat;
+  background:url('assets/FOCOS.jpg') center top/auto 100% no-repeat;
   mix-blend-mode:multiply;opacity:0.55;pointer-events:none;
 }
 #rsvp .tag{color:rgba(255,255,255,0.55)}
@@ -621,7 +621,7 @@ footer{
 }
 footer::before{
   content:'';position:absolute;inset:0;
-  background:url('assets/texture.jpg') center/cover;
+  background:url('assets/TEXTURA.jpg') center/cover;
   opacity:0.05;mix-blend-mode:overlay;
 }
 .footer-names{font-family:var(--script);font-size:clamp(4rem,9vw,7rem);color:var(--cream);margin-bottom:0.5rem;position:relative}
@@ -719,7 +719,7 @@ footer::before{
 <div id="env-screen">
   <div id="env-petals"></div>
 
-  <img class="env-arch" src="assets/monogram-arch.jpg" alt="J&A"/>
+  <img class="env-arch" src="assets/ARCO.jpg" alt="J&A"/>
 
   <div class="env-wrapper" id="envelope" onclick="openEnvelope()">
     <div class="env-back"></div>
@@ -790,7 +790,7 @@ footer::before{
 <section id="blessing">
   <div class="paper-overlay"></div>
   <!-- 🐱 cats peeking bottom-right of blessing -->
-  <img class="pet-accent pet-accent-br rv" src="assets/cats.jpg" alt="" aria-hidden="true"/>
+  <img class="pet-accent pet-accent-br rv" src="assets/GATOS.jpg" alt="" aria-hidden="true"/>
   <div class="container">
     <div class="div rv"><span class="div-ico">✦</span></div>
     <blockquote class="blessing-quote rv d1">
@@ -814,13 +814,12 @@ footer::before{
     <h2 class="h2 rv d1">6 años juntos</h2>
     <div class="div rv d2"><span class="div-ico">✦</span></div>
 
-    <!-- Editorial: pedida (B&W, tall) + foto Torre Eiffel (color) -->
-    <div class="photo-grid">
-      <div class="pg-item span-r rv-l" style="height:560px">
-        <img src="assets/pedida.jpg" alt="La pedida" style="height:100%;object-position:center top"/>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+      <div class="pg-item rv-l" style="height:600px">
+        <img src="assets/PARIS.jpg" alt="La propuesta en París" style="height:100%;object-position:center top"/>
       </div>
-      <div class="pg-item rv-r" style="height:560px">
-        <img src="https://jimenayabdon.my.canva.site/_assets/media/b0ca2483862604c7e187061edfa5c423.png" alt="Jimena y Abdón" style="height:100%"/>
+      <div class="pg-item rv-r d1" style="height:600px">
+        <img src="assets/PEDIDA.jpg" alt="La pedida" style="height:100%;object-position:center top"/>
       </div>
     </div>
 
@@ -841,7 +840,7 @@ footer::before{
 <section id="countdown">
   <div class="container" style="position:relative;z-index:1">
     <div class="cd-cal rv-s">
-      <img src="assets/calendar.jpg" alt="Ago 29 2026" style="width:100%;display:block"/>
+      <img src="assets/CALENDARIO.jpg" alt="Ago 29 2026" style="width:100%;display:block"/>
     </div>
 
     <span class="tag rv d1">La cuenta regresiva</span>
@@ -875,7 +874,7 @@ footer::before{
   <!-- Ceremony -->
   <div class="ev-panel">
     <div class="ev-illus-col rv-l">
-      <img class="ev-illus" src="assets/church.png" alt="Iglesia María Auxiliadora"/>
+      <img class="ev-illus" src="assets/IGLESIA.png" alt="Iglesia María Auxiliadora"/>
     </div>
     <div class="ev-text-col rv-r d1">
       <span class="ev-eyebrow">Ceremonia religiosa</span>
@@ -900,7 +899,7 @@ footer::before{
   <!-- Reception -->
   <div class="ev-panel reverse reception-bg">
     <div class="ev-illus-col rv-r">
-      <img class="ev-illus blend" src="assets/garden.jpg" alt="El Remanso"/>
+      <img class="ev-illus blend" src="assets/REMANSO.jpg" alt="El Remanso"/>
     </div>
     <div class="ev-text-col rv-l d1">
       <span class="ev-eyebrow">Recepción &amp; celebración</span>
@@ -933,10 +932,10 @@ footer::before{
 <section id="dresscode">
   <div class="paper-overlay"></div>
   <!-- 🐶 dog peeking bottom-left of dresscode -->
-  <img class="pet-accent pet-accent-bl rv" src="assets/dog.jpg" alt="" aria-hidden="true"/>
+  <img class="pet-accent pet-accent-bl rv" src="assets/CHEPI.jpg" alt="" aria-hidden="true"/>
 
   <!-- dancers full-width, blended -->
-  <img class="dress-dancers rv-s" src="assets/dancing.png" alt="Garden Chic"/>
+  <img class="dress-dancers rv-s" src="assets/DRESSCODE.PNG" alt="Garden Chic"/>
 
   <div class="dress-inner">
     <div class="container">
