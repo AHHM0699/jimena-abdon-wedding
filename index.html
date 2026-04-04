@@ -1623,20 +1623,21 @@ function getFingerprint(){
 }
 
 function updateGuestName(name){
-  if(!name)return;
+  const n=(name||'').toString().trim();
+  if(!n)return;
   // Update mini-card inside envelope
   const mn=document.querySelector('.mini-names');
-  if(mn)mn.textContent=name;
+  if(mn)mn.textContent=n;
   // Show name below envelope, scaled to fit
   const el=document.getElementById('env-guest-name');
   if(!el)return;
-  const len=name.length;
+  const len=n.length;
   const fs= len<=12 ? 'clamp(1.6rem,4vw,2.4rem)'
            :len<=20 ? 'clamp(1.2rem,3.2vw,1.9rem)'
            :len<=30 ? 'clamp(1rem,2.6vw,1.55rem)'
            :'clamp(0.85rem,2.1vw,1.2rem)';
   el.style.fontSize=fs;
-  el.textContent=name;
+  el.textContent=n;
 }
 
 function updateRsvpCount(invitados){
@@ -1666,17 +1667,20 @@ async function verifyCode(){
     const data=await resp.json();
 
     if(data.ok||data.valid){
+      // accept name from either field name the Apps Script may use
+      const gName=(data.name||data.nombre||'').toString().trim();
+      const gInv=data.invitados||data.guests||data.inv||1;
       sessionStorage.setItem('ga_code','1');
-      sessionStorage.setItem('ga_name',data.name||'');
-      sessionStorage.setItem('ga_inv',data.invitados||data.guests||1);
-      updateGuestName(data.name);
-      updateRsvpCount(data.invitados);
+      sessionStorage.setItem('ga_name',gName);
+      sessionStorage.setItem('ga_inv',gInv);
+      updateGuestName(gName);
+      updateRsvpCount(gInv);
       const codeScr=document.getElementById('code-screen');
       const envScr=document.getElementById('env-screen');
-      envScr.style.opacity='0';
+      // reveal env-screen cleanly: remove hide so CSS transition fires
       envScr.classList.remove('hide');
-      setTimeout(()=>{envScr.style.opacity='';},60);
-      setTimeout(()=>{codeScr.classList.add('hide');},200);
+      // hide code-screen slightly after so env-screen is already fading in
+      setTimeout(()=>{codeScr.classList.add('hide');},300);
     }else{
       errEl.textContent='Revisa bien tu c\u00F3digo. Si el problema persiste, cont\u00E1ctate con los novios.';
       btn.disabled=false;
