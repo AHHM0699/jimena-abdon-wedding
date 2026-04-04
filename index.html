@@ -108,27 +108,27 @@ img{display:block;max-width:100%}
   border-radius:4px 4px 10px 10px;
   transition:box-shadow 0.5s 0.3s ease;
 }
-.env-wrapper.opening .env-back{
-  box-shadow:inset 0 30px 80px rgba(0,0,0,0.32),inset 0 0 40px rgba(0,0,0,0.15);
-}
-
-/* Interior con pliegues diagonales */
+/* Interior realista: triángulo inferior oscuro, laterales claros */
 .env-inside{
   position:absolute;inset:0;border-radius:4px 4px 10px 10px;
-  background:linear-gradient(170deg,#c9c0a8 0%,#bfb49a 50%,#c4b99f 100%);
+  background:#d0c8b0;
   z-index:1;opacity:0;
   transition:opacity 0.4s 0.2s ease;
   overflow:hidden;
 }
+/* Triángulos laterales — ligeramente más claros */
 .env-inside::before{
   content:'';position:absolute;inset:0;
   background:
-    linear-gradient(135deg,rgba(0,0,0,0.12) 0%,transparent 42%,transparent 58%,rgba(0,0,0,0.12) 100%),
-    linear-gradient(225deg,rgba(0,0,0,0.12) 0%,transparent 42%,transparent 58%,rgba(0,0,0,0.12) 100%);
+    linear-gradient(135deg,rgba(255,255,255,0.2) 0%,transparent 50%),
+    linear-gradient(225deg,rgba(255,255,255,0.2) 0%,transparent 50%);
 }
+/* Triángulo inferior apuntando arriba — más oscuro, simula profundidad */
 .env-inside::after{
-  content:'';position:absolute;inset:0;
-  box-shadow:inset 0 0 60px rgba(0,0,0,0.22),inset 0 40px 60px rgba(0,0,0,0.18);
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:115px;
+  clip-path:polygon(0% 100%,50% 0%,100% 100%);
+  background:rgba(0,0,0,0.22);
 }
 .env-wrapper.opening .env-inside{opacity:1;}
 
