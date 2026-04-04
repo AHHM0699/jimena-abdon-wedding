@@ -474,7 +474,7 @@ footer{scroll-margin-top:48px}
 /* ══ EVENTOS ═════════════════════════════════════════════════ */
 /* No cards — editorial, full-bleed panels */
 #eventos{padding:0;background:var(--cream);position:relative;overflow:hidden}
-#eventos{scroll-margin-top:70px}
+#eventos{scroll-margin-top:58px}
 #eventos .div{margin-bottom:0.5rem}
 #eventos .h2{margin-bottom:0.4rem}
 #dresscode .div{margin-bottom:0.5rem}
@@ -719,13 +719,12 @@ footer::before{
 .chepi-footer{
   position:absolute;bottom:0;left:clamp(1rem,6vw,5rem);
   width:clamp(90px,13vw,160px);
-  mix-blend-mode:multiply;
   opacity:0;transform:translateY(100%);
   transition:opacity 0.8s cubic-bezier(.22,1,.36,1),transform 0.8s cubic-bezier(.22,1,.36,1);
-  filter:drop-shadow(0 -4px 10px rgba(0,0,0,0.3));
-  pointer-events:none;
+  filter:drop-shadow(0 0 18px rgba(244,240,232,0.25)) drop-shadow(0 -6px 12px rgba(0,0,0,0.5));
+  pointer-events:none;border-radius:4px;
 }
-.chepi-footer.visible{opacity:0.9;transform:translateY(0);}
+.chepi-footer.visible{opacity:1;transform:translateY(0);}
 
 /* ══ MAP IMAGE LINK ══════════════════════════════════════════ */
 .ev-map-pulse{display:block;text-decoration:none;position:relative;z-index:1;outline:none;}
