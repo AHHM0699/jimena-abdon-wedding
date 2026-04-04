@@ -701,7 +701,7 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
 /* ══ FOOTER ═══════════════════════════════════════════════════ */
 footer{
   background:var(--dark);text-align:center;
-  padding:6rem 1.5rem;position:relative;z-index:1;overflow:hidden;
+  padding:6rem 1.5rem 3rem;position:relative;z-index:1;overflow:hidden;
 }
 footer::before{
   content:'';position:absolute;inset:0;
@@ -714,6 +714,16 @@ footer::before{
   color:rgba(244,240,232,0.5);max-width:480px;margin:0 auto 2.5rem;line-height:1.9;position:relative;
 }
 .footer-copy{font-family:var(--sans);font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(244,240,232,0.22);position:relative}
+.chepi-footer{
+  position:absolute;bottom:0;left:clamp(1rem,6vw,5rem);
+  width:clamp(90px,13vw,160px);
+  mix-blend-mode:multiply;
+  opacity:0;transform:translateY(100%);
+  transition:opacity 0.8s cubic-bezier(.22,1,.36,1),transform 0.8s cubic-bezier(.22,1,.36,1);
+  filter:drop-shadow(0 -4px 10px rgba(0,0,0,0.3));
+  pointer-events:none;
+}
+.chepi-footer.visible{opacity:0.9;transform:translateY(0);}
 
 /* ══ MAP IMAGE LINK ══════════════════════════════════════════ */
 .ev-map-pulse{display:block;text-decoration:none;position:relative;z-index:1;outline:none;}
@@ -1134,6 +1144,7 @@ footer::before{
 
 <!-- ━━━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <footer>
+  <img class="chepi-footer" id="chepi-footer" src="assets/CHEPI.jpg" alt="" aria-hidden="true"/>
   <div class="div" style="filter:brightness(0.4);margin-bottom:2.5rem"><span class="div-ico" style="color:var(--off)">✦</span></div>
   <p class="footer-names">Jimena &amp; Abdón</p>
   <p class="footer-copy">¡Los esperamos con mucho amor! · 29 · VIII · 2026</p>
@@ -1379,6 +1390,16 @@ function frame(){
   requestAnimationFrame(frame);
 }
 frame();
+
+/* ─ CHEPI FOOTER ─────────────────────────────────────── */
+(function(){
+  const chepi=document.getElementById('chepi-footer');
+  if(!chepi) return;
+  const obs=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){chepi.classList.add('visible');obs.disconnect();}
+  },{threshold:0.3});
+  obs.observe(chepi);
+})();
 
 /* ─ IGLESIA MAP HINT ─────────────────────────────────── */
 (function(){
