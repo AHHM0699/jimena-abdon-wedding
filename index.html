@@ -63,6 +63,77 @@ img{display:block;max-width:100%}
 @keyframes loaderIn{to{opacity:0.9}}
 @keyframes loaderSlide{to{left:100%}}
 
+/* ══ CODE SCREEN ════════════════════════════════════════════ */
+#code-screen{
+  position:fixed;inset:0;z-index:9000;
+  background:radial-gradient(ellipse at 50% 60%,#3d4522 0%,#252a12 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  transition:opacity 0.8s ease,visibility 0.8s;
+  overflow:hidden;
+}
+#code-screen::before{
+  content:'';position:absolute;inset:0;
+  background:url('assets/TEXTURA.jpg') center/cover;
+  opacity:0.04;pointer-events:none;mix-blend-mode:overlay;
+}
+#code-screen.hide{opacity:0;visibility:hidden;pointer-events:none}
+.code-arch{
+  width:clamp(160px,32vw,220px);
+  opacity:0;animation:envIn 1.2s 0.8s forwards;
+  mix-blend-mode:multiply;filter:brightness(1.1);
+}
+.code-box{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(231,237,235,0.15);
+  border-radius:16px;backdrop-filter:blur(12px);
+  padding:2.5rem 2rem;
+  display:flex;flex-direction:column;align-items:center;gap:1.2rem;
+  width:clamp(280px,85vw,400px);
+  opacity:0;animation:envIn 1s 1.2s forwards;
+  position:relative;z-index:1;
+}
+.code-label{
+  font-family:var(--sans);font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(231,237,235,0.55);text-align:center;
+}
+.code-subtitle{
+  font-family:var(--serif);font-style:italic;font-size:1rem;
+  color:rgba(231,237,235,0.32);text-align:center;margin-top:-0.4rem;
+}
+#code-input{
+  width:100%;
+  background:rgba(255,255,255,0.08);
+  border:1.5px solid rgba(231,237,235,0.22);border-radius:10px;
+  color:var(--off);font-family:var(--sans);font-size:1.5rem;
+  letter-spacing:0.35em;text-align:center;text-transform:uppercase;
+  padding:0.9rem 1.2rem;outline:none;
+  transition:border-color 0.3s,background 0.3s;
+  -webkit-appearance:none;
+}
+#code-input:focus{border-color:rgba(231,237,235,0.55);background:rgba(255,255,255,0.12);}
+#code-input::placeholder{
+  color:rgba(231,237,235,0.18);letter-spacing:0.15em;font-size:1.1rem;
+  text-transform:none;
+}
+#code-btn{
+  width:100%;padding:1rem;
+  background:linear-gradient(135deg,var(--olive),var(--sage));
+  border:none;border-radius:10px;
+  color:var(--white);font-family:var(--sans);font-size:0.85rem;
+  letter-spacing:0.18em;text-transform:uppercase;font-weight:500;
+  cursor:pointer;
+  transition:transform 0.25s,box-shadow 0.25s,opacity 0.25s;
+  box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+#code-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,0.35)}
+#code-btn:active{transform:translateY(0)}
+#code-btn:disabled{opacity:0.5;cursor:wait;transform:none}
+.code-error{
+  font-family:var(--sans);font-size:0.82rem;letter-spacing:0.05em;
+  color:#e07878;text-align:center;
+  min-height:1.1em;line-height:1.5;
+}
+
 /* ══ ENVELOPE SCREEN ════════════════════════════════════════ */
 #env-screen{
   position:fixed;inset:0;z-index:8000;
@@ -852,8 +923,23 @@ footer::before{
   <div class="loader-bar"></div>
 </div>
 
+<!-- CODE ENTRY SCREEN -->
+<div id="code-screen">
+  <img class="code-arch" src="assets/ARCO.jpg" alt="J&A"/>
+  <div class="code-box">
+    <p class="code-label">Ingresa tu código de invitación</p>
+    <p class="code-subtitle">Lo encontrarás en tu invitación</p>
+    <input type="text" id="code-input" placeholder="JA-XXXX"
+      maxlength="7" autocomplete="off" autocorrect="off"
+      autocapitalize="characters" spellcheck="false"
+      inputmode="text"/>
+    <button id="code-btn" onclick="verifyCode()">Confirmar</button>
+    <p class="code-error" id="code-error"></p>
+  </div>
+</div>
+
 <!-- ENVELOPE SCREEN -->
-<div id="env-screen">
+<div id="env-screen" class="hide">
   <div id="env-petals"></div>
 
   <img class="env-arch" src="assets/ARCO.jpg" alt="J&A"/>
@@ -1111,6 +1197,7 @@ footer::before{
     <div class="div rv d2" style="filter:brightness(3)"><span class="div-ico">✦</span></div>
     <p class="sub rv d2">Tu presencia es el regalo más grande.<br>Confirma antes del <strong style="color:var(--white)">15 de junio de 2026</strong>.</p>
     <div class="deadline-badge rv d3">📅 &nbsp; Fecha límite: 15 de junio</div>
+    <p id="rsvp-pase" style="display:none;font-family:var(--sans);font-size:1rem;letter-spacing:0.08em;color:var(--white);position:relative;z-index:1;background:rgba(255,255,255,0.12);padding:0.65rem 1.6rem;border-radius:10px;border:1px solid rgba(255,255,255,0.25);margin-bottom:0.5rem"></p>
     <br>
     <a class="rsvp-btn rv d3" href="https://dparte.wedding/jimenayabdon" target="_blank" rel="noopener">
       ✉️ &nbsp; Confirmar asistencia
@@ -1494,6 +1581,97 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
   });
 });
+
+/* ─ GUEST CODE SYSTEM ────────────────────────────────── */
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbzkvM5WYSmBCX-8g1UZaRNcCMqrQ_JHGmQDmOvBnOwbw87uRGlVY4qN0vz_abxVJCLvJw/exec';
+
+function getFingerprint(){
+  const raw=navigator.userAgent+screen.width+'x'+screen.height+Intl.DateTimeFormat().resolvedOptions().timeZone;
+  let h=0;
+  for(let i=0;i<raw.length;i++){h=((h<<5)-h)+raw.charCodeAt(i);h|=0;}
+  return Math.abs(h).toString(16);
+}
+
+function updateGuestName(name){
+  if(!name)return;
+  const mn=document.querySelector('.mini-names');
+  if(mn)mn.textContent=name;
+}
+
+function updateRsvpCount(invitados){
+  const inv=parseInt(invitados)||0;
+  if(!inv)return;
+  const el=document.getElementById('rsvp-pase');
+  if(!el)return;
+  el.textContent='\uD83C\uDFDF\uFE0F  Tu pase es para '+inv+' persona'+(inv===1?'':'s');
+  el.style.display='inline-block';
+}
+
+async function verifyCode(){
+  const input=document.getElementById('code-input');
+  const btn=document.getElementById('code-btn');
+  const errEl=document.getElementById('code-error');
+  const code=input.value.trim().toUpperCase();
+
+  if(!code){errEl.textContent='Por favor ingresa tu c\u00F3digo.';return;}
+
+  btn.disabled=true;
+  btn.textContent='Verificando\u2026';
+  errEl.textContent='';
+
+  try{
+    const fp=getFingerprint();
+    const resp=await fetch(SCRIPT_URL+'?code='+encodeURIComponent(code)+'&fp='+fp);
+    const data=await resp.json();
+
+    if(data.valid){
+      sessionStorage.setItem('ga_code',code);
+      sessionStorage.setItem('ga_name',data.name||'');
+      sessionStorage.setItem('ga_inv',data.invitados||1);
+      updateGuestName(data.name);
+      updateRsvpCount(data.invitados);
+      const codeScr=document.getElementById('code-screen');
+      const envScr=document.getElementById('env-screen');
+      envScr.style.opacity='0';
+      envScr.classList.remove('hide');
+      setTimeout(()=>{envScr.style.opacity='';},60);
+      setTimeout(()=>{codeScr.classList.add('hide');},200);
+    }else{
+      errEl.textContent='Revisa bien tu c\u00F3digo. Si el problema persiste, cont\u00E1ctate con los novios.';
+      btn.disabled=false;
+      btn.textContent='Confirmar';
+    }
+  }catch(e){
+    errEl.textContent='Sin conexi\u00F3n. Verifica tu internet e intenta de nuevo.';
+    btn.disabled=false;
+    btn.textContent='Confirmar';
+  }
+}
+
+document.getElementById('code-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter'){verifyCode();}
+});
+document.getElementById('code-input').addEventListener('input',function(){
+  const pos=this.selectionStart;
+  this.value=this.value.toUpperCase();
+  this.setSelectionRange(pos,pos);
+});
+
+// Restore session on reload (same tab)
+(function(){
+  if(sessionStorage.getItem('ga_code')){
+    document.getElementById('code-screen').classList.add('hide');
+    const envScr=document.getElementById('env-screen');
+    envScr.style.transition='none';
+    envScr.classList.remove('hide');
+    // restore transition after paint
+    requestAnimationFrame(()=>{envScr.style.transition='';});
+    const name=sessionStorage.getItem('ga_name');
+    const inv=sessionStorage.getItem('ga_inv');
+    if(name)updateGuestName(name);
+    if(inv)updateRsvpCount(inv);
+  }
+})();
 </script>
 </body>
 </html>
