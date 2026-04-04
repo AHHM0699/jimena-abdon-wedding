@@ -100,20 +100,34 @@ img{display:block;max-width:100%}
   font-family:var(--serif);font-style:italic;font-size:1rem;
   color:rgba(231,237,235,0.32);text-align:center;margin-top:-0.4rem;
 }
-#code-input{
+.code-prefix-row{
+  display:flex;align-items:center;
   width:100%;
   background:rgba(255,255,255,0.08);
   border:1.5px solid rgba(231,237,235,0.22);border-radius:10px;
-  color:var(--off);font-family:var(--sans);font-size:1.5rem;
-  letter-spacing:0.35em;text-align:center;text-transform:uppercase;
-  padding:0.9rem 1.2rem;outline:none;
+  overflow:hidden;
   transition:border-color 0.3s,background 0.3s;
+}
+.code-prefix-row:focus-within{
+  border-color:rgba(231,237,235,0.55);background:rgba(255,255,255,0.12);
+}
+.code-prefix{
+  font-family:var(--sans);font-size:1.5rem;letter-spacing:0.05em;
+  color:rgba(231,237,235,0.35);
+  padding:0.9rem 0.2rem 0.9rem 1.4rem;
+  user-select:none;pointer-events:none;
+  white-space:nowrap;
+}
+#code-input{
+  flex:1;min-width:0;
+  background:transparent;border:none;
+  color:var(--off);font-family:var(--sans);font-size:1.5rem;
+  letter-spacing:0.35em;text-transform:uppercase;
+  padding:0.9rem 1.2rem 0.9rem 0.2rem;outline:none;
   -webkit-appearance:none;
 }
-#code-input:focus{border-color:rgba(231,237,235,0.55);background:rgba(255,255,255,0.12);}
 #code-input::placeholder{
-  color:rgba(231,237,235,0.18);letter-spacing:0.15em;font-size:1.1rem;
-  text-transform:none;
+  color:rgba(231,237,235,0.18);letter-spacing:0.2em;font-size:1.2rem;
 }
 #code-btn{
   width:100%;padding:1rem;
@@ -929,10 +943,13 @@ footer::before{
   <div class="code-box">
     <p class="code-label">Ingresa tu código de invitación</p>
     <p class="code-subtitle">Lo encontrarás en tu invitación</p>
-    <input type="text" id="code-input" placeholder="JA-XXXX"
-      maxlength="7" autocomplete="off" autocorrect="off"
-      autocapitalize="characters" spellcheck="false"
-      inputmode="text"/>
+    <div class="code-prefix-row">
+      <span class="code-prefix">JA-</span>
+      <input type="text" id="code-input" placeholder="XXXX"
+        maxlength="4" autocomplete="off" autocorrect="off"
+        autocapitalize="characters" spellcheck="false"
+        inputmode="text"/>
+    </div>
     <button id="code-btn" onclick="verifyCode()">Confirmar</button>
     <p class="code-error" id="code-error"></p>
   </div>
@@ -1611,9 +1628,9 @@ async function verifyCode(){
   const input=document.getElementById('code-input');
   const btn=document.getElementById('code-btn');
   const errEl=document.getElementById('code-error');
-  const code=input.value.trim().toUpperCase();
+  const code='JA-'+input.value.trim().toUpperCase();
 
-  if(!code){errEl.textContent='Por favor ingresa tu c\u00F3digo.';return;}
+  if(input.value.trim().length<4){errEl.textContent='Por favor ingresa los 4 d\u00EDgitos de tu c\u00F3digo.';return;}
 
   btn.disabled=true;
   btn.textContent='Verificando\u2026';
@@ -1624,10 +1641,10 @@ async function verifyCode(){
     const resp=await fetch(SCRIPT_URL+'?code='+encodeURIComponent(code)+'&fp='+fp);
     const data=await resp.json();
 
-    if(data.valid){
-      sessionStorage.setItem('ga_code',code);
+    if(data.ok||data.valid){
+      sessionStorage.setItem('ga_code','1');
       sessionStorage.setItem('ga_name',data.name||'');
-      sessionStorage.setItem('ga_inv',data.invitados||1);
+      sessionStorage.setItem('ga_inv',data.invitados||data.guests||1);
       updateGuestName(data.name);
       updateRsvpCount(data.invitados);
       const codeScr=document.getElementById('code-screen');
