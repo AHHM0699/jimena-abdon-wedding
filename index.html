@@ -1113,6 +1113,9 @@ footer::before{
 <!-- ══════════════════════════════════════════════════════════ -->
 <script>
 /* ─ LOADER ───────────────────────────────────────────── */
+history.scrollRestoration='manual';
+window.scrollTo(0,0);
+
 window.addEventListener('load',()=>{
   setTimeout(()=>document.getElementById('loader').classList.add('hide'),1800);
 });
