@@ -703,13 +703,21 @@ footer::before{
 }
 .footer-copy{font-family:var(--sans);font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(244,240,232,0.22);position:relative}
 
-/* ══ MAP TAP PULSE (ambas imágenes) ══════════════════════════ */
+/* ══ MAP IMAGE LINK ══════════════════════════════════════════ */
 .ev-map-pulse{display:block;text-decoration:none;position:relative;}
-@keyframes mapPulse{
-  0%  {box-shadow:0 0 0 0   rgba(132,138,54,0.75)}
-  100%{box-shadow:0 0 0 36px rgba(132,138,54,0)}
+
+/* ── Viñeta hint en iglesia ── */
+.map-hint{
+  position:absolute;top:12px;right:12px;z-index:10;
+  background:rgba(37,42,18,0.82);backdrop-filter:blur(6px);
+  color:var(--off);font-family:var(--sans);font-size:0.65rem;
+  letter-spacing:0.14em;text-transform:uppercase;
+  padding:0.45rem 0.75rem;border-radius:20px;
+  white-space:nowrap;pointer-events:none;
+  opacity:0;transition:opacity 0.35s ease;
 }
-.ev-map-pulse.tapped{animation:mapPulse 0.7s ease-out forwards;}
+.map-hint.show{opacity:1;}
+.map-hint::before{content:'📍 ';}
 
 /* ══ MAP IMAGE LINK ══════════════════════════════════════════ */
 .ev-map-img{
@@ -964,8 +972,9 @@ footer::before{
   <!-- Ceremony -->
   <div class="ev-panel">
     <div class="ev-illus-col rv-l">
-      <a class="ev-map-pulse" href="https://www.google.com/maps/place/Iglesia+Mar%C3%ADa+Auxiliadora/@-5.1912591,-80.6266165,17.79z/data=!4m6!3m5!1s0x904a107b88b96825:0x9cc3bc7936464356!8m2!3d-5.1930913!4d-80.6252921!16s%2Fg%2F1hdzwh0r5?entry=ttu" target="_blank" rel="noopener">
+      <a class="ev-map-pulse" id="iglesia-link" href="https://www.google.com/maps/place/Iglesia+Mar%C3%ADa+Auxiliadora/@-5.1912591,-80.6266165,17.79z/data=!4m6!3m5!1s0x904a107b88b96825:0x9cc3bc7936464356!8m2!3d-5.1930913!4d-80.6252921!16s%2Fg%2F1hdzwh0r5?entry=ttu" target="_blank" rel="noopener">
         <img class="ev-illus blend" src="assets/SEUSS-IGLESIA.png" alt="Iglesia María Auxiliadora"/>
+        <span class="map-hint" id="iglesia-hint">Presiona para ver en Mapas</span>
       </a>
     </div>
     <div class="ev-text-col rv-r d1">
@@ -1378,15 +1387,19 @@ function frame(){
 }
 frame();
 
-/* ─ MAP TAP PULSE ────────────────────────────────────── */
-document.querySelectorAll('.ev-map-pulse').forEach(el=>{
-  el.addEventListener('click',function(){
-    this.classList.remove('tapped');
-    void this.offsetWidth;
-    this.classList.add('tapped');
-    setTimeout(()=>this.classList.remove('tapped'),750);
-  });
-});
+/* ─ IGLESIA MAP HINT ─────────────────────────────────── */
+(function(){
+  const link=document.getElementById('iglesia-link');
+  const hint=document.getElementById('iglesia-hint');
+  if(!link||!hint) return;
+  let timer=null;
+  function showHint(){
+    hint.classList.add('show');
+    clearTimeout(timer);
+    timer=setTimeout(()=>hint.classList.remove('show'),2800);
+  }
+  link.addEventListener('touchstart',showHint,{passive:true});
+})();
 
 /* ─ SMOOTH ANCHORS ───────────────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
