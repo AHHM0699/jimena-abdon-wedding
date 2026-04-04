@@ -1329,7 +1329,7 @@ function runCountdownEntrance(){
   if(cdStarted) return; cdStarted=true;
   const real=getRealValues();
   const startD=Math.min(real.d+120,999),startH=99,startM=99,startS=99;
-  const dur=2000,t0=performance.now();
+  const dur=750,t0=performance.now();
   function roll(now){
     const p=Math.min((now-t0)/dur,1);
     const e=1-Math.pow(1-p,3);
