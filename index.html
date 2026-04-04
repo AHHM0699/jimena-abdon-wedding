@@ -1195,32 +1195,51 @@ for(let i=0;i<36;i++){
 function playEnvelopeSound(){
   try{
     const ac=new(window.AudioContext||window.webkitAudioContext)();
-    // Layer 1: white noise burst (paper rustle)
-    const bufLen=ac.sampleRate*0.55;
+    const t=ac.currentTime;
+
+    // Capa 1: susurro suave de papel — ruido filtrado, ataque lento
+    const bufLen=ac.sampleRate*0.9;
     const buf=ac.createBuffer(1,bufLen,ac.sampleRate);
     const data=buf.getChannelData(0);
-    for(let i=0;i<bufLen;i++) data[i]=(Math.random()*2-1)*(1-i/bufLen)*0.55;
+    for(let i=0;i<bufLen;i++) data[i]=(Math.random()*2-1)*0.4;
     const src=ac.createBufferSource();
     src.buffer=buf;
-    // bandpass to make it sound like paper
-    const bp=ac.createBiquadFilter();
-    bp.type='bandpass';bp.frequency.value=1800;bp.Q.value=0.4;
-    // gain envelope
-    const gain=ac.createGain();
-    gain.gain.setValueAtTime(0,ac.currentTime);
-    gain.gain.linearRampToValueAtTime(0.7,ac.currentTime+0.04);
-    gain.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.55);
-    src.connect(bp);bp.connect(gain);gain.connect(ac.destination);
+    const lp=ac.createBiquadFilter();
+    lp.type='bandpass';lp.frequency.value=900;lp.Q.value=0.8;
+    const g1=ac.createGain();
+    g1.gain.setValueAtTime(0,t);
+    g1.gain.linearRampToValueAtTime(0.18,t+0.12);   // ataque suave
+    g1.gain.setValueAtTime(0.18,t+0.28);
+    g1.gain.exponentialRampToValueAtTime(0.001,t+0.9);
+    src.connect(lp);lp.connect(g1);g1.connect(ac.destination);
     src.start();
-    // Layer 2: soft low thud
-    const osc=ac.createOscillator();
+
+    // Capa 2: brillo suave de papel — frecuencia alta, muy tenue
+    const buf2=ac.createBuffer(1,bufLen,ac.sampleRate);
+    const d2=buf2.getChannelData(0);
+    for(let i=0;i<bufLen;i++) d2[i]=(Math.random()*2-1)*0.3;
+    const src2=ac.createBufferSource();
+    src2.buffer=buf2;
+    const hp=ac.createBiquadFilter();
+    hp.type='highpass';hp.frequency.value=3500;hp.Q.value=0.5;
     const g2=ac.createGain();
-    osc.type='sine';osc.frequency.setValueAtTime(120,ac.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(60,ac.currentTime+0.18);
-    g2.gain.setValueAtTime(0.35,ac.currentTime);
-    g2.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+0.22);
-    osc.connect(g2);g2.connect(ac.destination);
-    osc.start();osc.stop(ac.currentTime+0.22);
+    g2.gain.setValueAtTime(0,t);
+    g2.gain.linearRampToValueAtTime(0.07,t+0.08);
+    g2.gain.exponentialRampToValueAtTime(0.001,t+0.55);
+    src2.connect(hp);hp.connect(g2);g2.connect(ac.destination);
+    src2.start();
+
+    // Capa 3: resonancia cálida suave — tono grave muy discreto
+    const osc=ac.createOscillator();
+    const g3=ac.createGain();
+    osc.type='sine';
+    osc.frequency.setValueAtTime(80,t);
+    osc.frequency.exponentialRampToValueAtTime(55,t+0.5);
+    g3.gain.setValueAtTime(0,t);
+    g3.gain.linearRampToValueAtTime(0.08,t+0.1);
+    g3.gain.exponentialRampToValueAtTime(0.001,t+0.55);
+    osc.connect(g3);g3.connect(ac.destination);
+    osc.start();osc.stop(t+0.55);
   }catch(e){}
 }
 
