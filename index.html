@@ -332,16 +332,29 @@ img{display:block;max-width:100%}
   transform:translate(-50%,-50%) rotate(-6deg) scale(0.7);
 }
 
+/* Name written on envelope face */
 .env-guest-name{
-  font-family:var(--script);
-  /* font-size set dynamically by JS based on name length */
-  color:rgba(231,237,235,0.88);
+  position:absolute;
+  top:68%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:7;
   text-align:center;
-  max-width:clamp(280px,60vw,360px);
+  max-width:88%;
   line-height:1.25;
   word-break:break-word;
   pointer-events:none;
+  font-family:var(--script);
+  /* Gold ink with dark stroke for contrast over envelope paper */
+  color:#d4a82a;
+  -webkit-text-stroke:0.6px rgba(90,58,5,0.55);
+  text-stroke:0.6px rgba(90,58,5,0.55);
+  text-shadow:
+    0 1px 6px rgba(0,0,0,0.45),
+    0 0 14px rgba(212,168,42,0.25);
+  transition:opacity 0.2s ease;
 }
+/* Fade out when envelope starts opening */
+.env-wrapper.opening .env-guest-name{opacity:0}
 
 .env-hint{
   font-family:var(--sans);font-size:0.8rem;letter-spacing:0.3em;text-transform:uppercase;
@@ -989,11 +1002,12 @@ footer::before{
       </div>
     </div>
     <div class="env-front"></div>
+    <!-- Name on envelope face -->
+    <p class="env-guest-name" id="env-guest-name"></p>
     <!-- Sello afuera del sobre, en el cierre del flap, como lacre real -->
     <img class="env-seal" src="assets/SELLO.jpg" alt="Sello J♥A"/>
   </div>
 
-  <p class="env-guest-name" id="env-guest-name"></p>
   <p class="env-hint">✦ &nbsp; toca para abrir tu invitación &nbsp; ✦</p>
 </div>
 
@@ -1625,17 +1639,14 @@ function getFingerprint(){
 function updateGuestName(name){
   const n=(name||'').toString().trim();
   if(!n)return;
-  // Update mini-card inside envelope
-  const mn=document.querySelector('.mini-names');
-  if(mn)mn.textContent=n;
-  // Show name below envelope, scaled to fit
   const el=document.getElementById('env-guest-name');
   if(!el)return;
+  // Font size tuned for envelope face dimensions
   const len=n.length;
-  const fs= len<=12 ? 'clamp(1.6rem,4vw,2.4rem)'
-           :len<=20 ? 'clamp(1.2rem,3.2vw,1.9rem)'
-           :len<=30 ? 'clamp(1rem,2.6vw,1.55rem)'
-           :'clamp(0.85rem,2.1vw,1.2rem)';
+  const fs= len<=10 ? 'clamp(1.1rem,3.2vw,1.5rem)'
+           :len<=18 ? 'clamp(0.9rem,2.6vw,1.2rem)'
+           :len<=28 ? 'clamp(0.75rem,2.1vw,1rem)'
+           :'clamp(0.65rem,1.8vw,0.85rem)';
   el.style.fontSize=fs;
   el.textContent=n;
 }
