@@ -332,6 +332,21 @@ img{display:block;max-width:100%}
   transform:translate(-50%,-50%) rotate(-6deg) scale(0.7);
 }
 
+.env-guest-name{
+  font-family:var(--script);
+  /* font-size set dynamically by JS based on name length */
+  color:rgba(231,237,235,0.88);
+  text-align:center;
+  max-width:clamp(280px,60vw,360px);
+  line-height:1.25;
+  word-break:break-word;
+  opacity:0;
+  transition:opacity 0.7s 0.2s ease;
+  pointer-events:none;
+  min-height:1.3em;
+}
+.env-guest-name.show{opacity:1}
+
 .env-hint{
   font-family:var(--sans);font-size:0.8rem;letter-spacing:0.3em;text-transform:uppercase;
   color:rgba(231,237,235,0.45);
@@ -982,6 +997,7 @@ footer::before{
     <img class="env-seal" src="assets/SELLO.jpg" alt="Sello J♥A"/>
   </div>
 
+  <p class="env-guest-name" id="env-guest-name"></p>
   <p class="env-hint">✦ &nbsp; toca para abrir tu invitación &nbsp; ✦</p>
 </div>
 
@@ -1611,8 +1627,20 @@ function getFingerprint(){
 
 function updateGuestName(name){
   if(!name)return;
+  // Update mini-card inside envelope
   const mn=document.querySelector('.mini-names');
   if(mn)mn.textContent=name;
+  // Show name below envelope, scaled to fit
+  const el=document.getElementById('env-guest-name');
+  if(!el)return;
+  const len=name.length;
+  const fs= len<=12 ? 'clamp(1.6rem,4vw,2.4rem)'
+           :len<=20 ? 'clamp(1.2rem,3.2vw,1.9rem)'
+           :len<=30 ? 'clamp(1rem,2.6vw,1.55rem)'
+           :'clamp(0.85rem,2.1vw,1.2rem)';
+  el.style.fontSize=fs;
+  el.textContent=name;
+  el.classList.add('show');
 }
 
 function updateRsvpCount(invitados){
@@ -1620,7 +1648,7 @@ function updateRsvpCount(invitados){
   if(!inv)return;
   const el=document.getElementById('rsvp-pase');
   if(!el)return;
-  el.textContent='\uD83C\uDFDF\uFE0F  Tu pase es para '+inv+' persona'+(inv===1?'':'s');
+  el.textContent='Tu pase es para '+inv+' persona'+(inv===1?'':'s')+'.';
   el.style.display='inline-block';
 }
 
