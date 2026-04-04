@@ -1394,11 +1394,15 @@ frame();
 /* ─ CHEPI FOOTER ─────────────────────────────────────── */
 (function(){
   const chepi=document.getElementById('chepi-footer');
-  if(!chepi) return;
+  const footer=document.querySelector('footer');
+  if(!chepi||!footer) return;
   const obs=new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){chepi.classList.add('visible');obs.disconnect();}
-  },{threshold:0.3});
-  obs.observe(chepi);
+    if(entries[0].isIntersecting){
+      setTimeout(()=>chepi.classList.add('visible'),150);
+      obs.disconnect();
+    }
+  },{threshold:0.2});
+  obs.observe(footer);
 })();
 
 /* ─ IGLESIA MAP HINT ─────────────────────────────────── */
