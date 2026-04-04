@@ -346,8 +346,8 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
 }
 .hero-eye{
   position:absolute;
-  top:38%;left:50%;
-  transform:translateX(-50%);
+  top:38%;left:0;right:0;
+  text-align:center;
   white-space:nowrap;
   font-family:var(--sans);font-size:0.85rem;letter-spacing:0.45em;text-transform:uppercase;
   color:rgba(231,237,235,0.95);
@@ -387,8 +387,8 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
   opacity:0;animation:fadeIn 1s 2.6s forwards;
 }
 .scroll-cue span{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(231,237,235,0.45)}
-.scroll-line{width:1px;height:56px;background:linear-gradient(to bottom,rgba(231,237,235,0.5),transparent);animation:scrollAnim 2.2s ease-in-out infinite}
-@keyframes scrollAnim{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.scroll-line{width:1px;height:56px;background:linear-gradient(to top,rgba(231,237,235,0.5),transparent);animation:scrollAnim 2.2s ease-in-out infinite}
+@keyframes scrollAnim{0%{transform:scaleY(0);transform-origin:bottom}50%{transform:scaleY(1);transform-origin:bottom}51%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:top}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
