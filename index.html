@@ -755,6 +755,16 @@ footer::before{
 .pet-accent-br{bottom:0;right:2rem;width:clamp(80px,10vw,130px)}
 .pet-accent-bl{bottom:0;left:2rem;width:clamp(80px,10vw,130px)}
 .pet-accent-tr{top:5rem;right:1.5rem;width:clamp(60px,8vw,110px)}
+.seuss-deco{
+  display:block;margin:0 auto;
+  width:clamp(70px,9vw,110px);
+  mix-blend-mode:multiply;
+  opacity:0;transform:translateY(16px);
+  transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);
+  animation:floatY 4s ease-in-out infinite;
+  filter:drop-shadow(0 4px 8px rgba(58,63,32,0.18));
+}
+.seuss-deco.visible{opacity:0.9;transform:translateY(0)}
 
 /* ══ RESPONSIVE ═══════════════════════════════════════════════ */
 @media(max-width:768px){
@@ -945,6 +955,7 @@ footer::before{
   <div style="text-align:center;padding:4rem 1.5rem 2rem">
     <h2 class="h2 rv">El gran día</h2>
     <div class="div rv d1"><span class="div-ico">✦</span></div>
+    <img class="seuss-deco rv d2" src="assets/SEUSS.PNG" alt=""/>
   </div>
 
   <!-- Ceremony -->
