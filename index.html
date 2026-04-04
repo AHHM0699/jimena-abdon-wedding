@@ -429,11 +429,6 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
 .pg-item{border-radius:6px;overflow:hidden;position:relative}
 .pg-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.9s cubic-bezier(.22,1,.36,1)}
 .pg-item:hover img{transform:scale(1.04)}
-.pg-item.fade-bottom::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:45%;
-  background:linear-gradient(to bottom,transparent,#3a3f20);
-  pointer-events:none;
-}
 .pg-item.span-r{grid-row:span 2}
 
 /* ══ COUNTDOWN ═══════════════════════════════════════════════ */
@@ -458,7 +453,6 @@ section{position:relative;z-index:1;padding:8rem 1.5rem}
   border-radius:12px;overflow:hidden;
   margin:0 auto 3rem;
   box-shadow:0 16px 60px rgba(0,0,0,0.4);
-  opacity:0;animation:floatIn 1s 0.3s forwards;
 }
 @keyframes floatIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
@@ -907,14 +901,14 @@ footer::before{
       <div class="pg-item rv" style="height:600px">
         <img src="assets/PARIS.jpg" alt="La propuesta en París" style="height:100%;object-position:center top"/>
       </div>
-      <div class="pg-item rv d1 fade-bottom" style="height:600px">
+      <div class="pg-item rv d1" style="height:600px">
         <img src="assets/PEDIDA.jpg" alt="La pedida" style="height:100%;object-position:center top"/>
       </div>
     </div>
   </div>
-  <div class="wave-bottom" style="height:140px">
-    <svg viewBox="0 0 1440 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <path d="M0,80 C200,20 400,140 600,70 C800,0 1000,120 1200,60 C1320,20 1400,90 1440,80 L1440,140 L0,140 Z" fill="#3a3f20"/>
+  <div class="wave-bottom">
+    <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,60 C180,0 360,100 540,50 C720,0 900,100 1080,50 C1260,0 1380,80 1440,60 L1440,100 L0,100 Z" fill="#3a3f20"/>
     </svg>
   </div>
 </section>
@@ -1303,23 +1297,46 @@ cdObserver.observe(cdSection);
 /* ─ COUNTDOWN ────────────────────────────────────────── */
 const WEDDING=new Date(2026,7,29,17,0,0);
 function pad(n){return String(n).padStart(2,'0')}
-function tick(){
+function getRealValues(){
   const diff=WEDDING-Date.now();
-  if(diff<=0){
-    ['cd-d','cd-h','cd-m','cd-s']
-      .forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='00'});
-    return;
-  }
-  const d=Math.floor(diff/864e5);
-  const h=Math.floor(diff%864e5/36e5);
-  const m=Math.floor(diff%36e5/6e4);
-  const s=Math.floor(diff%6e4/1e3);
-  document.getElementById('cd-d').textContent=pad(d);
-  document.getElementById('cd-h').textContent=pad(h);
-  document.getElementById('cd-m').textContent=pad(m);
-  document.getElementById('cd-s').textContent=pad(s);
+  if(diff<=0) return {d:0,h:0,m:0,s:0};
+  return{
+    d:Math.floor(diff/864e5),
+    h:Math.floor(diff%864e5/36e5),
+    m:Math.floor(diff%36e5/6e4),
+    s:Math.floor(diff%6e4/1e3)
+  };
 }
-tick(); setInterval(tick,1000);
+function tick(){
+  const v=getRealValues();
+  document.getElementById('cd-d').textContent=pad(v.d);
+  document.getElementById('cd-h').textContent=pad(v.h);
+  document.getElementById('cd-m').textContent=pad(v.m);
+  document.getElementById('cd-s').textContent=pad(v.s);
+}
+let cdStarted=false;
+function runCountdownEntrance(){
+  if(cdStarted) return; cdStarted=true;
+  const real=getRealValues();
+  const startD=Math.min(real.d+120,999),startH=99,startM=99,startS=99;
+  const dur=2000,t0=performance.now();
+  function roll(now){
+    const p=Math.min((now-t0)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    document.getElementById('cd-d').textContent=pad(Math.round(startD-(startD-real.d)*e));
+    document.getElementById('cd-h').textContent=pad(Math.round(startH-(startH-real.h)*e));
+    document.getElementById('cd-m').textContent=pad(Math.round(startM-(startM-real.m)*e));
+    document.getElementById('cd-s').textContent=pad(Math.round(startS-(startS-real.s)*e));
+    if(p<1) requestAnimationFrame(roll);
+    else setInterval(tick,1000);
+  }
+  requestAnimationFrame(roll);
+}
+// Arrancar descuento cuando el cd-row entra en pantalla
+const cdRowObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){runCountdownEntrance();cdRowObs.disconnect();}
+},{threshold:0.5});
+cdRowObs.observe(document.querySelector('.cd-row'));
 
 /* ─ FLOATING PETALS CANVAS ──────────────────────────── */
 const canvas=document.getElementById('petal-canvas');
