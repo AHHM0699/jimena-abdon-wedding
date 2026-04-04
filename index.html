@@ -187,6 +187,25 @@ img{display:block;max-width:100%}
 .env-front::before{left:0;border-width:0 0 115px 50%;border-color:transparent transparent #e2dbc8 transparent}
 .env-front::after{right:0;border-width:0 50% 115px 0;border-color:transparent #e2dbc8 transparent transparent}
 
+/* Sello exterior — como lacre sobre el cierre del sobre */
+.env-seal{
+  position:absolute;
+  left:50%;
+  /* en el punto del flap (50% del sobre) */
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:90px;
+  z-index:6; /* sobre el flap (z-index 3) y el front (4) */
+  mix-blend-mode:multiply;
+  pointer-events:none;
+  filter:drop-shadow(0 3px 10px rgba(0,0,0,0.35));
+  /* cuando el flap se abre, el sello queda "roto" en su sitio */
+  transition:opacity 0.4s 0.4s ease;
+}
+.env-wrapper.opening .env-seal{
+  opacity:0;
+}
+
 .env-hint{
   font-family:var(--sans);font-size:0.8rem;letter-spacing:0.3em;text-transform:uppercase;
   color:rgba(231,237,235,0.45);
@@ -781,6 +800,8 @@ footer::before{
       </div>
     </div>
     <div class="env-front"></div>
+    <!-- Sello afuera del sobre, en el cierre del flap, como lacre real -->
+    <img class="env-seal" src="assets/SELLO.jpg" alt="Sello J♥A"/>
   </div>
 
   <p class="env-hint">✦ &nbsp; toca para abrir tu invitación &nbsp; ✦</p>
