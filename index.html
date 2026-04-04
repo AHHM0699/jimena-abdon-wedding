@@ -704,7 +704,8 @@ footer::before{
 .footer-copy{font-family:var(--sans);font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(244,240,232,0.22);position:relative}
 
 /* ══ MAP IMAGE LINK ══════════════════════════════════════════ */
-.ev-map-pulse{display:block;text-decoration:none;position:relative;}
+.ev-map-pulse{display:block;text-decoration:none;position:relative;z-index:1;outline:none;}
+.ev-map-pulse:focus,.ev-map-pulse:focus-visible{outline:none;box-shadow:none;}
 
 /* ── Viñeta hint en iglesia ── */
 .map-hint{
@@ -999,7 +1000,7 @@ footer::before{
       </a>
       <img src="assets/GATOS-BRINDANDO.gif" alt="" aria-hidden="true"
         style="width:clamp(120px,18vw,200px);mix-blend-mode:multiply;
-               position:absolute;bottom:-10px;right:-10px;z-index:3;
+               position:absolute;bottom:-10px;right:-10px;z-index:10;
                animation:floatY 3.5s ease-in-out infinite;
                filter:contrast(1.2) saturate(1.15) drop-shadow(0 4px 10px rgba(58,63,32,0.25));"/>
     </div>
