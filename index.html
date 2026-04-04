@@ -729,6 +729,10 @@ footer::before{
   transition:opacity 0.8s cubic-bezier(.22,1,.36,1),transform 0.8s cubic-bezier(.22,1,.36,1);
   filter:drop-shadow(0 -4px 12px rgba(0,0,0,0.4));
   pointer-events:none;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,black 5px calc(100% - 5px),transparent 100%),linear-gradient(to bottom,transparent 0,black 5px calc(100% - 5px),transparent 100%);
+  -webkit-mask-composite:destination-in;
+  mask-image:linear-gradient(to right,transparent 0,black 5px calc(100% - 5px),transparent 100%),linear-gradient(to bottom,transparent 0,black 5px calc(100% - 5px),transparent 100%);
+  mask-composite:intersect;
 }
 .chepi-footer.visible{opacity:1;transform:translateY(0);}
 
