@@ -703,6 +703,37 @@ footer::before{
 }
 .footer-copy{font-family:var(--sans);font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(244,240,232,0.22);position:relative}
 
+/* ══ MAP HOVER OVERLAY (iglesia) ════════════════════════════ */
+.ev-map-hover{display:block;position:relative;text-decoration:none;}
+.ev-map-hover-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(37,42,18,0.82) 0%,rgba(37,42,18,0.4) 60%,transparent 100%);
+  display:flex;align-items:center;justify-content:center;gap:0.5rem;
+  padding:1.2rem 1rem 1rem;
+  transform:translateY(100%);
+  transition:transform 0.38s cubic-bezier(.22,1,.36,1);
+  pointer-events:none;
+  font-family:var(--sans);font-size:0.72rem;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--off);
+}
+.ev-map-hover:hover .ev-map-hover-label,
+.ev-map-hover:focus .ev-map-hover-label{transform:translateY(0)}
+
+/* ══ MAP TAP PULSE (remanso) ═════════════════════════════════ */
+.ev-map-pulse{display:block;text-decoration:none;position:relative;border-radius:8px;overflow:hidden;}
+.ev-map-pulse::after{
+  content:'';position:absolute;inset:0;border-radius:8px;
+  box-shadow:0 0 0 0 rgba(132,138,54,0.7);
+  opacity:0;transition:opacity 0.2s;
+}
+.ev-map-pulse:active::after{
+  animation:mapPulse 0.6s ease-out forwards;
+}
+@keyframes mapPulse{
+  0%{opacity:1;box-shadow:0 0 0 0 rgba(132,138,54,0.7)}
+  100%{opacity:0;box-shadow:0 0 0 28px rgba(132,138,54,0)}
+}
+
 /* ══ MAP IMAGE LINK ══════════════════════════════════════════ */
 .ev-map-img{
   display:block;position:relative;border-radius:12px;overflow:hidden;
@@ -956,8 +987,9 @@ footer::before{
   <!-- Ceremony -->
   <div class="ev-panel">
     <div class="ev-illus-col rv-l">
-      <a href="https://www.google.com/maps/place/Iglesia+Mar%C3%ADa+Auxiliadora/@-5.1912591,-80.6266165,17.79z/data=!4m6!3m5!1s0x904a107b88b96825:0x9cc3bc7936464356!8m2!3d-5.1930913!4d-80.6252921!16s%2Fg%2F1hdzwh0r5?entry=ttu" target="_blank" rel="noopener">
+      <a class="ev-map-hover" href="https://www.google.com/maps/place/Iglesia+Mar%C3%ADa+Auxiliadora/@-5.1912591,-80.6266165,17.79z/data=!4m6!3m5!1s0x904a107b88b96825:0x9cc3bc7936464356!8m2!3d-5.1930913!4d-80.6252921!16s%2Fg%2F1hdzwh0r5?entry=ttu" target="_blank" rel="noopener">
         <img class="ev-illus blend" src="assets/SEUSS-IGLESIA.png" alt="Iglesia María Auxiliadora"/>
+        <div class="ev-map-hover-label">📍 &nbsp; Ver en Google Maps</div>
       </a>
     </div>
     <div class="ev-text-col rv-r d1">
@@ -976,7 +1008,7 @@ footer::before{
   <!-- Reception -->
   <div class="ev-panel reverse reception-bg" style="padding:2.5rem 1.5rem">
     <div class="ev-illus-col rv-r" style="position:relative;flex-direction:column;align-items:center;gap:0">
-      <a href="https://www.google.com/maps/place/EL+REMANSO/@-5.1422108,-80.6236131,17z/data=!3m1!4b1!4m6!3m5!1s0x904a0fc94942318f:0x95f9e60695f4c5c3!8m2!3d-5.1422108!4d-80.6236131!16s%2Fg%2F11gmg34zcw?entry=ttu" target="_blank" rel="noopener" style="display:block">
+      <a class="ev-map-pulse" href="https://www.google.com/maps/place/EL+REMANSO/@-5.1422108,-80.6236131,17z/data=!3m1!4b1!4m6!3m5!1s0x904a0fc94942318f:0x95f9e60695f4c5c3!8m2!3d-5.1422108!4d-80.6236131!16s%2Fg%2F11gmg34zcw?entry=ttu" target="_blank" rel="noopener">
         <img class="ev-illus blend" src="assets/REMANSO.jpg" alt="El Remanso"/>
       </a>
       <img src="assets/GATOS-BRINDANDO.gif" alt="" aria-hidden="true"
