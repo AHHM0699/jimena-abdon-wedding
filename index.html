@@ -340,12 +340,8 @@ img{display:block;max-width:100%}
   max-width:clamp(280px,60vw,360px);
   line-height:1.25;
   word-break:break-word;
-  opacity:0;
-  transition:opacity 0.7s 0.2s ease;
   pointer-events:none;
-  min-height:1.3em;
 }
-.env-guest-name.show{opacity:1}
 
 .env-hint{
   font-family:var(--sans);font-size:0.8rem;letter-spacing:0.3em;text-transform:uppercase;
@@ -1444,6 +1440,7 @@ function openEnvelope(){
     // Etapa 4 (880ms tras el zoom): overlay y env-screen se desvanecen
     // juntos → la página real (idéntica al overlay) aparece suavemente
     setTimeout(()=>{
+      window.scrollTo(0,0);
       document.body.style.overflow='auto';
       const fade='opacity 0.9s ease';
       scr.style.transition=fade;
@@ -1640,7 +1637,6 @@ function updateGuestName(name){
            :'clamp(0.85rem,2.1vw,1.2rem)';
   el.style.fontSize=fs;
   el.textContent=name;
-  el.classList.add('show');
 }
 
 function updateRsvpCount(invitados){
