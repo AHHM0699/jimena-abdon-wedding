@@ -716,13 +716,19 @@ footer::before{
   color:rgba(244,240,232,0.5);max-width:480px;margin:0 auto 2.5rem;line-height:1.9;position:relative;
 }
 .footer-copy{font-family:var(--sans);font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(244,240,232,0.22);position:relative}
+.footer-credit{
+  font-family:var(--sans);font-size:0.6rem;letter-spacing:0.12em;
+  color:rgba(244,240,232,0.1);text-align:center;
+  padding:1.2rem 1.5rem 1rem;position:relative;z-index:1;
+  background:var(--dark);
+}
 .chepi-footer{
   position:absolute;bottom:0;left:clamp(1rem,6vw,5rem);
   width:clamp(90px,13vw,160px);
   opacity:0;transform:translateY(100%);
   transition:opacity 0.8s cubic-bezier(.22,1,.36,1),transform 0.8s cubic-bezier(.22,1,.36,1);
-  filter:drop-shadow(0 0 18px rgba(244,240,232,0.25)) drop-shadow(0 -6px 12px rgba(0,0,0,0.5));
-  pointer-events:none;border-radius:4px;
+  filter:drop-shadow(0 -4px 12px rgba(0,0,0,0.4));
+  pointer-events:none;
 }
 .chepi-footer.visible{opacity:1;transform:translateY(0);}
 
@@ -1145,11 +1151,12 @@ footer::before{
 
 <!-- ━━━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
 <footer>
-  <img class="chepi-footer" id="chepi-footer" src="assets/CHEPI.jpg" alt="" aria-hidden="true"/>
+  <img class="chepi-footer" id="chepi-footer" src="assets/CHEPI-VERDE.png" alt="" aria-hidden="true"/>
   <div class="div" style="filter:brightness(0.4);margin-bottom:2.5rem"><span class="div-ico" style="color:var(--off)">✦</span></div>
   <p class="footer-names">Jimena &amp; Abdón</p>
   <p class="footer-copy">¡Los esperamos con mucho amor! · 29 · VIII · 2026</p>
 </footer>
+<div class="footer-credit">Orgullosamente diseñado y programado por J&amp;A Invitaciones 2026 · Todos los derechos reservados</div>
 
 <!-- ══════════════════════════════════════════════════════════ -->
 <script>
@@ -1341,7 +1348,7 @@ function runCountdownEntrance(){
   if(cdStarted) return; cdStarted=true;
   const real=getRealValues();
   const startD=Math.min(real.d+120,999),startH=99,startM=99,startS=99;
-  const dur=750,t0=performance.now();
+  const dur=1000,t0=performance.now();
   function roll(now){
     const p=Math.min((now-t0)/dur,1);
     const e=1-Math.pow(1-p,3);
