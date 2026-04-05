@@ -1703,9 +1703,11 @@ document.getElementById('code-input').addEventListener('keydown',function(e){
   if(e.key==='Enter'){verifyCode();}
 });
 document.getElementById('code-input').addEventListener('input',function(){
+  if(this.value.length>4)this.value=this.value.slice(0,4);
   const pos=this.selectionStart;
   this.value=this.value.toUpperCase();
   this.setSelectionRange(pos,pos);
+  if(this.value.trim().length===4)verifyCode();
 });
 
 // Restore session on reload (same tab)
