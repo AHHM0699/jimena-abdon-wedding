@@ -1711,6 +1711,16 @@ document.getElementById('code-input').addEventListener('input',function(){
   if(this.value.trim().length===4)verifyCode();
 });
 
+// Auto-fill code from URL parameter (?code=XXXX)
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  const urlCode=(params.get('code')||'').trim().toUpperCase().replace(/^JA-/,'').slice(0,4);
+  if(urlCode.length===4){
+    const input=document.getElementById('code-input');
+    if(input){input.value=urlCode;verifyCode();}
+  }
+})();
+
 // Restore session on reload (same tab)
 (function(){
   if(sessionStorage.getItem('ga_code')){
